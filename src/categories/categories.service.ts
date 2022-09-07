@@ -3,17 +3,14 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
-import { getRepository } from "typeorm";
 
 @Injectable()
 export class CategoriesService {
   @InjectRepository(Category)
   private readonly repository: Repository<Category>;
 
-
   createCategory(body: CreateCategoryDto): Promise<Category> {
     const category: Category = new Category();
-
 
     category.category_id = body.id;
     category.name = body.name;
@@ -31,7 +28,8 @@ export class CategoriesService {
   }
 
   async getRandom() {
-    const array = await this.repository.createQueryBuilder()
+    const array = await this.repository
+      .createQueryBuilder()
       .select('*')
       .from(Category, 'categories')
       .orderBy('RANDOM()')

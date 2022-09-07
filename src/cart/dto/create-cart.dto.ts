@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateCategoryDto {
+export class CreateCartDto {
   @IsNotEmpty()
   public id: number;
 

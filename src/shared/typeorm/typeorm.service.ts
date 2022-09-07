@@ -8,7 +8,6 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   private readonly config: ConfigService;
 
   public createTypeOrmOptions(): TypeOrmModuleOptions {
-
     return {
       type: 'postgres',
       host: this.config.get<string>('DATABASE_HOST'),
@@ -19,8 +18,8 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       entities: ['dist/**/*.entity.{ts,js}'],
       migrations: ['dist/migrations/*.{ts,js}'],
       migrationsTableName: 'typeorm_migrations',
-      logger: 'file', 
-      //dropSchema:true,
+      logger: 'file',
+      dropSchema: false,
       synchronize: false, // never use TRUE in production!
     };
   }

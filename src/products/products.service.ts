@@ -11,12 +11,10 @@ export class ProductsService {
 
   findAll() {
     return this.repository.find({
-      relations:{
-        category:true
-      }
+      relations: {
+        category: true,
+      },
     });
-
-    
   }
 
   findOne(id: number): Promise<Product> {

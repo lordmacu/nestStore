@@ -4,24 +4,24 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
 } from 'typeorm';
 
+import { Cart } from './cart.entity';
 import { Product } from '../../products/entities/product.entity';
 
 @Entity()
-export class Category {
+export class CartItem {
   @PrimaryGeneratedColumn()
   public id!: number;
 
   @Column({ type: 'integer', default: 0, select: false })
-  public category_id: number;
+  public product_id: number;
 
-  @Column({ type: 'varchar', length: 120 })
-  public name: string;
-
-  @Column({ type: 'varchar', length: 120 })
-  public icon: string;
+  @Column({ type: 'varchar' })
+  public cart_id: string;
 
   /*
    * Create and Update Date Columns
@@ -33,6 +33,11 @@ export class Category {
   @UpdateDateColumn({ type: 'timestamp', select: false })
   public updatedAt!: Date;
 
-  @OneToMany(() => Product, (photo) => photo.category)
-  products: Product[];
+  @ManyToOne(() => Cart, (cart) => cart.items)
+  @JoinColumn({ name: 'cart_id' })
+  cart: Cart;
+
+  @OneToOne(() => Product, (product) => product.item)
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
 }

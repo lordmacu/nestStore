@@ -1,11 +1,10 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ProductDTO {
-    @ApiProperty()
-    readonly id?: string;
+  @ApiProperty()
+  readonly id?: string;
 
-
-    constructor(id: string) {
-        this.id = id;
-    }
+  constructor(id: string) {
+    this.id = id;
+  }
 }
