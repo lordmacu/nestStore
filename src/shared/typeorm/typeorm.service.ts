@@ -19,8 +19,8 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       migrations: ['dist/migrations/*.{ts,js}'],
       migrationsTableName: 'typeorm_migrations',
       logger: 'file',
-      dropSchema: false,
-      synchronize: false, // never use TRUE in production!
+      dropSchema: true,
+      synchronize: true, // never use TRUE in production!
       ssl: {    /* <----- Add SSL option */
         rejectUnauthorized: false,
       },
