@@ -25,6 +25,17 @@ export class ProductsService {
     return this.repository.remove(product);
   }
 
+  findAllByCategory(category_id) {
+    return this.repository.find({
+      where:{
+        categoryId:category_id
+      },
+      relations: {
+        category: true,
+      },
+    });
+  }
+
   createProduct(body: CreateProductDto): Promise<Product> {
     const product: Product = new Product();
 

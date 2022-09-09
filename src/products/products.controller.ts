@@ -1,7 +1,8 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, Param } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CategoriesService } from '../categories/categories.service';
 import { Product } from './entities/product.entity';
+import { Category } from 'src/categories/entities/category.entity';
 
 @Controller('products')
 export class ProductsController {
@@ -161,5 +162,16 @@ export class ProductsController {
   @Get()
   public getAll(): Promise<Product[]> {
     return this.serviceProduct.findAll();
+  }
+
+
+  @Get('byCategory/:id')
+  public getProductsByCategory(@Param('id') id: number): Promise<Product[]> {
+    return this.serviceProduct.findAllByCategory(id);
+  }
+
+  @Get('categories')
+  public getCategories(@Param('id') id: number): Promise<Category[]> {
+   return  this.serviceCategory.findAll();
   }
 }

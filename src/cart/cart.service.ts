@@ -34,6 +34,20 @@ export class CartService {
 
     return items;
   }
+  
+  async checkProductInCart(cart: string, product): Promise<CartItem[]> {
+    const items = await this.repositoryItems.find({
+      relations: {
+        product: true,
+      },
+      where: {
+        cart_id: cart,
+        product_id:product
+      },
+    });
+
+    return items;
+  }
 
   async addToCart(body: CreateCartItemDto) {
     const cartItem: CartItem = new CartItem();

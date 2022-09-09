@@ -15,8 +15,16 @@ export class CartController {
 
   @Post('addToCart')
   public async addToCart(@Body() cart: ItemDTO) {
-    const responseCart = await this.serviceCart.addToCart(cart);
-    return responseCart;
+
+    const checkProductInCart = await this.serviceCart.checkProductInCart(cart.cart_id, cart.product_id);
+
+    if (checkProductInCart.length > 0) {
+      return { 'response': 'Product is already added' }
+    }
+
+    await this.serviceCart.addToCart(cart);
+    
+    return { 'response': 'Product is added with success' }
   }
 
   @Get(':id')
