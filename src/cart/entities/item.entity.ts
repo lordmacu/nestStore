@@ -17,7 +17,7 @@ export class CartItem {
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @Column({ type: 'integer', default: 0, select: false })
+  @Column({ type: 'integer', default: 0 })
   public product_id: number;
 
   @Column({ type: 'varchar' })
@@ -34,10 +34,7 @@ export class CartItem {
   public updatedAt!: Date;
 
   @ManyToOne(() => Cart, (cart) => cart.items)
-  @JoinColumn({ name: 'cart_id' })
   cart: Cart;
 
-  @OneToOne(() => Product, (product) => product.item)
-  @JoinColumn({ name: 'product_id' })
-  product: Product;
+   
 }

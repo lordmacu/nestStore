@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from './entities/cart.entity';
 import { Repository } from 'typeorm';
 import { CartItem } from './entities/item.entity';
+import { Product } from '../products/entities/product.entity';
 import { CreateCartItemDto } from './dto/create-cart-item.dto';
 import { uuid } from 'uuidv4';
 
@@ -24,27 +25,38 @@ export class CartService {
 
   async getItemsFromCartId(id: string): Promise<CartItem[]> {
     const items = await this.repositoryItems.find({
-     
+     /* relations: {
+        product: true,
+      },*/
       where: {
         cart_id: id,
       },
     });
 
-    return items;
+   // return items;
+
+    const array = await this.repositoryItems
+    .createQueryBuilder('cart_item')
+     .innerJoinAndSelect(Product, 'p1', 'cart_item.product_id = p1.product_id') 
+     .where('cart_item.cart_id = :id', {id: id})
+ 
+    .getRawMany();
+
+    return array;
   }
   
   async checkProductInCart(cart: string, product): Promise<CartItem[]> {
-    const items = await this.repositoryItems.find({
-      relations: {
-        product: true,
-      },
-      where: {
-        cart_id: cart,
-        product_id:product
-      },
-    });
+    
 
-    return items;
+    const array = await this.repositoryItems
+    .createQueryBuilder('cart_item')
+     .innerJoinAndSelect(Product, 'p1', 'cart_item.product_id = p1.product_id') 
+     .where('cart_item.cart_id = :id', {id: cart})
+     .andWhere('cart_item.product_id = :sid', { sid: product })
+
+    .getRawMany();
+
+    return array;
   }
 
   async addToCart(body: CreateCartItemDto) {

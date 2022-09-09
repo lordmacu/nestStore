@@ -15,7 +15,7 @@ export class Product {
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @Column({ type: 'integer', default: 0, select: false })
+  @Column({ type: 'integer', default: 0})
   public product_id: number;
 
   @Column({ type: 'varchar', length: 120 })
@@ -49,6 +49,5 @@ export class Product {
   @ManyToOne(() => Category, (product) => product.products)
   category: Category;
 
-  @OneToOne(() => CartItem, (cartItem) => cartItem.product)
-  item: CartItem;
+
 }
