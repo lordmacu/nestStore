@@ -21,6 +21,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       logger: 'file',
       dropSchema: false,
       synchronize: false, // never use TRUE in production!
+      ssl: {    /* <----- Add SSL option */
+        rejectUnauthorized: false,
+      },
     };
   }
 }
